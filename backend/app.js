@@ -38,9 +38,12 @@ app.post("/claim", async (req, res) => {
   try {
     const randomPoints = Math.floor(Math.random() * 10) + 1; // Generate random points between 1 and 10
     const user = await User.findByIdAndUpdate(
-      userId,
-      { $inc: { points: randomPoints } },
-      { new: true }
+        userId,
+        {
+          $inc: { points: randomPoints }, // Increment total points
+          $push: { history: { pointsAwarded: randomPoints } }, // Add to history
+        },
+        { new: true }
     );
 
     if (!user) return res.status(404).json({ error: "User not found" });
@@ -85,6 +88,10 @@ app.get("/history/:userId", async (req, res) => {
       res.status(500).json({ error: "Internal server error" });
     }
 });
+
+app.get("/",(req,res)=>{
+    res.status(200).json("The Backend service is running");
+})
 
 server.listen(3000, () => {
   console.log("Server is running on http://localhost:3000");

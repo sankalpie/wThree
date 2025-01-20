@@ -11,11 +11,11 @@ function Leaderboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const socket = io("http://localhost:3000");
+    const socket = io("https://wthree.onrender.com/");
 
     const fetchRankings = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/rankings");
+        const response = await axios.get("https://wthree.onrender.com/rankings");
         setRankings(response.data);
       } catch (error) {
         console.error("Error fetching rankings:", error);
@@ -39,7 +39,7 @@ function Leaderboard() {
     }
     setLoading(true);
     try {
-      await axios.post("http://localhost:3000/claim", { userId: selectedUserId });
+      await axios.post("https://wthree.onrender.com/claim", { userId: selectedUserId });
     } catch (error) {
       console.error("Error claiming points:", error);
     }
@@ -99,7 +99,7 @@ function UserHistory({ userId }) {
   useEffect(() => {
     const fetchUserHistory = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/history/${userId}`);
+        const response = await axios.get(`https://wthree.onrender.com/history/${userId}`);
         setUser(response.data);
       } catch (error) {
         console.error("Error fetching user history:", error);
